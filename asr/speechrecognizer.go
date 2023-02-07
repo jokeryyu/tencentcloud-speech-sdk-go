@@ -115,6 +115,8 @@ type SpeechRecognizer struct {
 
 	mutex   sync.Mutex
 	started bool
+
+	host string
 }
 
 const (
@@ -177,6 +179,7 @@ func NewSpeechRecognizer(appID string, credential *common.Credential, engineMode
 
 		listener: listener,
 		started:  false,
+		host:     host,
 	}
 	return reco
 }
@@ -505,5 +508,12 @@ func (recognizer *SpeechRecognizer) genRecoverFunc() func() {
 				err: retErr,
 			}
 		}
+	}
+}
+
+// SetHost 设置请求host地址
+func (recognizer *SpeechRecognizer) SetHost(host string) {
+	if host != "" {
+		recognizer.host = host
 	}
 }
